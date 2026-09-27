@@ -1,0 +1,27 @@
+[package]
+name = "rofi-rbw-rs"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.74"
+description = "Rofi frontend for rbw (reimplementation)"
+license = "MIT"
+
+[lib]
+name = "rofi_rbw_rs"
+path = "src/lib.rs"
+
+[[bin]]
+name = "rofi-rbw-rs"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1"
+log = "0.4"
+env_logger = "0.11"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+regex = "1"
+which = "8"
+sha1 = "0.11"
+clap = { version = "4", features = ["derive"] }
+shlex = "2"
