@@ -1,4 +1,3 @@
-```markdown
 # rofi-rbw-rs
 
 A fast, native frontend for [rbw](https://github.com/doy/rbw) — the unofficial
@@ -234,86 +233,92 @@ rofi-rbw-rs -t menu
 
 Full flag list:
 
-Flag Description
--a, --action <type\|copy\|print\|sync> What to do with the selected entry. Default: type.
--t, --target <TARGET> Which part of the entry to use. Repeatable.
--r, --prompt <TEXT> Selector prompt. Default: Choose entry.
---selector <rofi\|wofi\|fuzzel\|bemenu> Force a specific selector. Default: autodetect.
---clipboarder <xsel\|xclip\|wl-copy> Force a specific clipboard backend.
---typer <xdotool\|wtype\|ydotool\|dotool> Force a specific typer backend.
---selector-args <ARGS> Extra arguments to pass to the selector.
---display-fields <F1> <F2> ... Ordered list of fields to show.
---clear-after <SECONDS> Auto-clear the clipboard after N seconds. 0 disables.
---no-help Don't show the keybinding help line in the selector.
---no-cache Don't use the MRU cache.
---use-notify-send Send a desktop notification after copying TOTP.
---keybindings <SPEC> Custom keybindings for the entry list.
---menu-keybindings <SPEC> Custom keybindings for the target menu.
---typing-key-delay <MS> Delay between keystrokes when typing.
---typing-start-delay <MS> Delay before typing starts.
---action-sequence-delay <MS> Delay for the delay target.
+| Flag | Description |
+| ------ | ------------- |
+| `-a`, `--action <type\|copy\|print\|sync>` | What to do with the selected entry. Default: `type`. |
+| `-t`, `--target <TARGET>` | Which part of the entry to use. Repeatable. |
+| `-r`, `--prompt <TEXT>` | Selector prompt. Default: `Choose entry`. |
+| `--selector <rofi\|wofi\|fuzzel\|bemenu>` | Force a specific selector. Default: autodetect. |
+| `--clipboarder <xsel\|xclip\|wl-copy>` | Force a specific clipboard backend. |
+| `--typer <xdotool\|wtype\|ydotool\|dotool>` | Force a specific typer backend. |
+| `--selector-args <ARGS>` | Extra arguments to pass to the selector. |
+| `--display-fields <F1> <F2> ...` | Ordered list of fields to show. |
+| `--clear-after <SECONDS>` | Auto-clear the clipboard after N seconds. `0` disables. |
+| `--no-help` | Don't show the keybinding help line in the selector. |
+| `--no-cache` | Don't use the MRU cache. |
+| `--use-notify-send` | Send a desktop notification after copying TOTP. |
+| `--keybindings <SPEC>` | Custom keybindings for the entry list. |
+| `--menu-keybindings <SPEC>` | Custom keybindings for the target menu. |
+| `--typing-key-delay <MS>` | Delay between keystrokes when typing. |
+| `--typing-start-delay <MS>` | Delay before typing starts. |
+| `--action-sequence-delay <MS>` | Delay for the `delay` target. |
 
-Display fields
+### Display fields
 
-The --display-fields option accepts, in order:
+The `--display-fields` option accepts, in order:
 
-· name_only — entry name (e.g. github.com)
-· name_with_folder — folder-prefixed name (e.g. work/github.com)
-· folder — folder only
-· user — username
-· uri — first URI
+- `name_only` — entry name (e.g. `github.com`)
+- `name_with_folder` — folder-prefixed name (e.g. `work/github.com`)
+- `folder` — folder only
+- `user` — username
+- `uri` — first URI
 
 Columns are right-padded with spaces to align. For example,
---display-fields name_with_folder user:
+`--display-fields name_with_folder user`:
 
 ```
+
 work/github.com    alice
 work/forgejo       alice
 personal/mastodon  alice@example.com
+
 ```
 
-Targets
+### Targets
 
-Valid targets for -t and keybindings:
+Valid targets for `-t` and keybindings:
 
-· username, password, totp — login credentials
-· notes — entry notes (newlines replaced with | in the target menu)
-· uri, uri 2, uri 3, … — indexed URIs
-· number, cardholder, brand, expiry, code — card fields
-· menu — open the target-selection menu instead of using a fixed target
-· enter, tab, delay — special sequence steps for the type action
+- `username`, `password`, `totp` — login credentials
+- `notes` — entry notes (newlines replaced with `|` in the target menu)
+- `uri`, `uri 2`, `uri 3`, … — indexed URIs
+- `number`, `cardholder`, `brand`, `expiry`, `code` — card fields
+- `menu` — open the target-selection menu instead of using a fixed target
+- `enter`, `tab`, `delay` — special sequence steps for the `type` action
 
-Keybindings
+### Keybindings
 
 The default keybindings, pressed inside the rofi entry list:
 
-Shortcut Action
-Alt+1 Type username, Tab, password
-Alt+2 Type username
-Alt+3 Type password
-Alt+4 Type TOTP
-Alt+c Copy password
-Alt+u Copy username
-Alt+t Copy TOTP
-Alt+m Open the target menu
-Alt+s Sync the vault
+| Shortcut | Action |
+| ---------- | -------- |
+| `Alt+1` | Type username, Tab, password |
+| `Alt+2` | Type username |
+| `Alt+3` | Type password |
+| `Alt+4` | Type TOTP |
+| `Alt+c` | Copy password |
+| `Alt+u` | Copy username |
+| `Alt+t` | Copy TOTP |
+| `Alt+m` | Open the target menu |
+| `Alt+s` | Sync the vault |
 
-Customize with --keybindings or the config file. The syntax is
-shortcut:action:target1:target2:..., comma-separated:
+Customize with `--keybindings` or the config file. The syntax is
+`shortcut:action:target1:target2:...`, comma-separated:
 
 ```
+
 keybindings = Alt+1:type:username:tab:password,Alt+c:copy:password
+
 ```
 
-In the target menu, the default keybindings are Alt+t for type and Alt+c
+In the target menu, the default keybindings are `Alt+t` for type and `Alt+c`
 for copy.
 
-Config file
+### Config file
 
-Options can be set in ~/.config/rofi-rbw.rc (or
-~/.config/rofi-rbw/config.rc), and are overridden by CLI flags. The format
-accepts key = value, key: value, or key value, one per line. # and
-; start comments; bare keys are treated as booleans.
+Options can be set in `~/.config/rofi-rbw.rc` (or
+`~/.config/rofi-rbw/config.rc`), and are overridden by CLI flags. The format
+accepts `key = value`, `key: value`, or `key value`, one per line. `#` and
+`;` start comments; bare keys are treated as booleans.
 
 Example:
 
@@ -343,7 +348,7 @@ keybindings = Alt+1:type:username:tab:password,\
 menu-keybindings = Alt+t:type,Alt+c:copy
 ```
 
-How it differs from upstream rofi-rbw
+## How it differs from upstream rofi-rbw
 
 The CLI and config-file format are intentionally compatible, so you can
 switch back and forth without changing anything in your workflow. The
@@ -358,7 +363,7 @@ differences are:
   rather than string comparison), so unusual entries fail loudly rather than
   silently.
 
-Troubleshooting
+## Troubleshooting
 
 "Could not find a valid way to show the selection"
 
@@ -395,8 +400,8 @@ it in when prompted.
 Empty rofi list
 
 Run rbw list --raw to confirm rbw returns entries. If it does and rofi
-still shows nothing, run with RUST_LOG=debug rofi-rbw-rs and check that the
-backend parser sees the entries.
+still shows nothing, run with RUST_LOG=debug rofi-rbw-rs and check that
+the backend parser sees the entries.
 
 Password typed into the wrong field
 
@@ -408,6 +413,6 @@ rofi-rbw-rs -a type -t username -t tab -t password
 rofi-rbw-rs -a type -t username -t enter -t password -t enter
 ```
 
-License
+# License
 
 PPL. See LICENSE.

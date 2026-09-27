@@ -4,8 +4,6 @@ use common::{entry, temp_cache};
 use std::fs;
 use std::path::Path;
 
-use rofi_rbw_rs::models::{Entry, EntryType};
-
 // ---------------------------------------------------------------------------
 // Cache::sorted with no existing file
 // ---------------------------------------------------------------------------

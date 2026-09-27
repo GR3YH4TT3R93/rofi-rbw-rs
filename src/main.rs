@@ -1,6 +1,7 @@
 use std::process::ExitCode;
 
 use anyhow::Result;
+use rofi_rbw_rs::dispatch::{dispatch, Env, Mode};
 use rofi_rbw_rs::RofiRbw;
 
 fn main() -> ExitCode {
@@ -16,5 +17,10 @@ fn main() -> ExitCode {
 }
 
 fn run() -> Result<()> {
-    RofiRbw::new()?.run()
+    let args: Vec<String> = std::env::args().collect();
+    match dispatch(&args, &Env::detect()) {
+        Mode::Pinentry => rofi_rbw_rs::pinentry::run(),
+        Mode::PinentryClear => rofi_rbw_rs::pinentry::clear_stored(),
+        Mode::Frontend => RofiRbw::new()?.run(),
+    }
 }
