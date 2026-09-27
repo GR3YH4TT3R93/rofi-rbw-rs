@@ -38,10 +38,13 @@ pub fn build_config_argv() -> Vec<String> {
 /// Parse a single config file into an argv fragment. Missing or unreadable
 /// files yield an empty fragment (configargparse silently skips them).
 fn parse_file(path: &Path) -> Vec<String> {
-    let Ok(text) = fs::read_to_string(path) else {
-        return Vec::new();
-    };
+    match fs::read_to_string(path) {
+        Ok(text) => parse_content(&text),
+        Err(_) => Vec::new(),
+    }
+}
 
+pub fn parse_content(text: &str) -> Vec<String> {
     let mut argv = Vec::new();
     let mut logical = String::new();
 
@@ -106,11 +109,15 @@ fn parse_file(path: &Path) -> Vec<String> {
     argv
 }
 
-/// Split a config line into `(key, value)` at the first of `=`, `:`, or
-/// whitespace. Returns `(line, "")` for a bare key.
+/// Split a config line at the first `=` or `:` — whichever comes first.
+/// Falls back to the first whitespace if the line contains neither
+/// (configargparse's regex allows a bare `key value` form).
 fn split_key_value(line: &str) -> (&str, &str) {
+    if let Some(i) = line.find(['=', ':']) {
+        return (&line[..i], line[i + 1..].trim_start());
+    }
     for (i, c) in line.char_indices() {
-        if c == '=' || c == ':' || c.is_whitespace() {
+        if c.is_whitespace() {
             return (&line[..i], line[i + 1..].trim_start());
         }
     }

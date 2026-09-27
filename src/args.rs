@@ -175,7 +175,7 @@ fn convert(cli: Cli) -> Result<Args> {
 
 // ---- clap value parsers ---------------------------------------------------
 
-fn parse_action(s: &str) -> Result<Action, String> {
+pub fn parse_action(s: &str) -> Result<Action, String> {
     match s {
         "type" => Ok(Action::Type),
         "copy" => Ok(Action::Copy),
@@ -187,13 +187,13 @@ fn parse_action(s: &str) -> Result<Action, String> {
     }
 }
 
-fn parse_display_field(s: &str) -> Result<DisplayFieldToken, String> {
+pub fn parse_display_field(s: &str) -> Result<DisplayFieldToken, String> {
     DisplayFieldToken::from_raw(s).ok_or_else(|| format!("invalid display field '{s}'"))
 }
 
 // ---- keybinding parsers ---------------------------------------------------
 
-fn parse_keybindings(spec: &str) -> Result<Vec<Keybinding>> {
+pub fn parse_keybindings(spec: &str) -> Result<Vec<Keybinding>> {
     spec.split(',')
         .filter(|s| !s.is_empty())
         .map(|kb| {
@@ -223,7 +223,7 @@ fn parse_keybindings(spec: &str) -> Result<Vec<Keybinding>> {
         .collect()
 }
 
-fn parse_menu_keybindings(spec: &str) -> Result<Vec<Keybinding>> {
+pub fn parse_menu_keybindings(spec: &str) -> Result<Vec<Keybinding>> {
     spec.split(',')
         .filter(|s| !s.is_empty())
         .map(|kb| {

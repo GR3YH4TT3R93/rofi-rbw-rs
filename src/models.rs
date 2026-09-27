@@ -163,7 +163,7 @@ pub enum EntryType {
 
 impl EntryType {
     pub fn from_raw(s: &str) -> Option<Self> {
-        match s {
+        match s.to_ascii_lowercase().as_str() {
             "login" => Some(Self::Login),
             "card" => Some(Self::Card),
             "note" => Some(Self::Note),
